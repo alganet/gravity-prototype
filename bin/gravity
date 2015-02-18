@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+use Supercluster\Gravity\Boot;
+
+chdir(__DIR__ . '/..');
+
+require 'vendor/autoload.php';
+
+try {
+
+	array_shift($argv);
+	$_SERVER['HTTP_ACCEPT']    = 'text/plain';
+	$_SERVER['REQUEST_METHOD'] = 'EXEC';
+	$_SERVER['REQUEST_URI']    = '/' . implode($argv);
+
+    (new Boot('supercluster.package.ini', 'cliApplication'))->run();
+} catch (Exception $e) {
+    echo "Unexpected Error.";
+    throw $e;
+}
+
