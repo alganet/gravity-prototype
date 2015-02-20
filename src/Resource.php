@@ -14,7 +14,7 @@ class Resource implements Routable
 
     public function get()
     {
-        print_r($this->products->fetchAll());
+        return ($this->products->fetchAll());
     }
 
 }

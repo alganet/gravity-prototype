@@ -2,8 +2,6 @@
 
 namespace Supercluster\Gravity;
 
-use Respect\Config\Container;
-
 /**
  * A container that boots a single of its keys, discarding the non used ones.
  */
@@ -31,7 +29,7 @@ class BootableContainer extends Container
     {
         $front = $this->{$this->frontName};
         $this->exchangeArray(array());
-        print $front->run();
+        return $front->run();
     }
 
     /**
@@ -46,10 +44,11 @@ class BootableContainer extends Container
         }
 
         $bootFiles = parse_ini_file($file, true);
+        $bootArray = [];
 
 
         foreach ($bootFiles['pre'] as $loaded) {
-            $this->loadFile($loaded);
+            $bootArray = array_merge($bootArray, parse_ini_file($loaded, true));
         }
 
         if (isset($bootFiles['boot'])) {
@@ -60,13 +59,23 @@ class BootableContainer extends Container
                 }
 
                 foreach ($bootedFiles['load'] as $bootLoad) {
-                    $this->loadFile(dirname($booted) . DIRECTORY_SEPARATOR . $bootLoad);
+                    $bootArray = array_merge(
+                        $bootArray,
+                        parse_ini_file(
+                            dirname($booted) .
+                            DIRECTORY_SEPARATOR .
+                            $bootLoad,
+                            true
+                        )
+                    );
                 }
             }
         }
 
         foreach ($bootFiles['load'] as $loaded) {
-            $this->loadFile($loaded);
+            $bootArray = array_merge($bootArray, parse_ini_file($loaded, true));
         }
+
+        $this->loadArray($bootArray);
     }
 }

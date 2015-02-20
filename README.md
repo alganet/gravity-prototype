@@ -9,5 +9,5 @@ $ composer install
 $ bin/gravity
 
 # server
-$ php -S localhost:8080 -tpublic
+$ php -S localhost:8080 public/index.php
 ```
