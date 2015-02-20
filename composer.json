@@ -9,6 +9,7 @@
         "respect/rest": "0.6.x",
         "respect/relational": "0.6.x",
         "respect/config": "1.1.x-dev",
+        "container-interop/container-interop": "~1.0",
         "twig/twig": "1.18.x"
     },
     "require-dev": {

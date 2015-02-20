@@ -2,6 +2,9 @@
 
 namespace Supercluster\Gravity\MediaTypes;
 
+/**
+ *
+ */
 class ApplicationJson
 {
     public function __invoke($data)

@@ -7,32 +7,36 @@ namespace Supercluster\Gravity\Datasources;
  */
 class SchemaContribution
 {
-    protected $properties  = [];
-    protected $collections = [];
+    protected $types  = [];
+    protected $ranges = [];
 
     /**
+     * Contribute to a type name and its specification
+     *
      * @param  string $name Name of a type
-     * @param  string $spec SQL specification for the type
+     * @param  string $spec Specification for the type
      *
      * @return null
      */
     public function subscribeType($name, $spec)
     {
-        $this->properties[$name] = $spec;
+        $this->types[$name] = $spec;
     }
 
     /**
+     * Contribute to a type range
+     *
      * @param  string $name     Name of a collection
-     * @param  string $property Property name to be subscribed
+     * @param  string $range    Range name to be subscribed
      *
      * @return null
      */
-    public function subscribeRange($name, $property)
+    public function subscribeRange($name, $range)
     {
-        if (!isset($this->collections[$name])) {
-            $this->collections[$name] = [];
+        if (!isset($this->ranges[$name])) {
+            $this->ranges[$name] = [];
         }
 
-        $this->collections[$name][] = $property;
+        $this->ranges[$name][] = $range;
     }
 }

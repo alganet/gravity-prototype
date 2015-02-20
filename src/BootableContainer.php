@@ -5,7 +5,7 @@ namespace Supercluster\Gravity;
 /**
  * A container that boots a single of its keys, discarding the non used ones.
  */
-class BootableContainer extends Container
+class BootableContainer extends InteropContainer
 {
     /** @var string Name of the single key to be booted */
     protected $frontName = null;

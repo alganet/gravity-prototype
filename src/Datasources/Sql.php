@@ -9,9 +9,14 @@ use Respect\Relational\Sql as RespectSql;
  */
 class Sql extends RespectSql
 {
+    /**
+     * Method used to translate from php method calls to SQL instructions.
+     * It is closely related to __call for the Respect\Relational\Sql class.
+     */
     protected function build($operation, $parts)
     {
         switch ($operation) {
+            // Allows Sql::createTableIfNotExists($columns)
             case 'createTableIfNotExists':
                 $this->buildFirstPart($parts);
                 return $this->buildParts($parts, '(%s) ');
