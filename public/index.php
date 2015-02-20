@@ -1,6 +1,6 @@
 <?php
 
-use Supercluster\Gravity\Boot;
+use Supercluster\Gravity\BootableContainer;
 
 /**
  * Supercluster Web Application
@@ -16,7 +16,7 @@ chdir(__DIR__ . '/..');
 require 'vendor/autoload.php';
 
 try {
-    (new Boot('supercluster.package.ini'))->run();
+    (new BootableContainer('supercluster.package.ini'))->run();
 } catch (Exception $e) {
     header('HTTP/1.1 500 Server Error');
     echo "Unexpected Error.";

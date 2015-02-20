@@ -11,12 +11,12 @@ class SchemaContribution
     protected $collections = [];
 
     /**
-     * @param  string $name Name of a property
+     * @param  string $name Name of a type
      * @param  string $spec SQL specification for the type
      *
      * @return null
      */
-    public function subscribeProperty($name, $spec)
+    public function subscribeType($name, $spec)
     {
         $this->properties[$name] = $spec;
     }
@@ -32,6 +32,7 @@ class SchemaContribution
         if (!isset($this->collections[$name])) {
             $this->collections[$name] = [];
         }
+
         $this->collections[$name][] = $property;
     }
 }

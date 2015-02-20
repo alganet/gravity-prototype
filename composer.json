@@ -16,7 +16,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Supercluster\\Gravity\\": "src"
+            "Supercluster\\Gravity\\": "src",
+            "Supercluster\\Catalog\\": "vendor/supercluster/catalog/src"
         }
     },
     "autoload-dev": {

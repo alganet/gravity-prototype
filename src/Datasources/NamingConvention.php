@@ -18,7 +18,7 @@ class NamingConvention extends Standard
      */
     public function remoteIdentifier($name)
     {
-        return $name . '_id';
+        return $name;
     }
 
     /**
@@ -27,7 +27,7 @@ class NamingConvention extends Standard
      */
     public function isRemoteIdentifier($name)
     {
-        return (strlen($name) - 3 === strripos($name, '_id'));
+        return (ucfirst($name) === $name);
     }
 
     /**
@@ -37,7 +37,7 @@ class NamingConvention extends Standard
     public function remoteFromIdentifier($name)
     {
         if ($this->isRemoteIdentifier($name)) {
-            return substr($name, 0, -3);
+            return $name;
         }
     }
 

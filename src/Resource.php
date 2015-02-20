@@ -7,8 +7,9 @@ use Respect\Rest\AbstractRoute;
 
 class Resource implements Routable
 {
-    public function __construct()
+    public function __construct($products)
     {
+        $this->products = $products;
     }
 
     public function get()
