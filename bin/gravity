@@ -3,19 +3,25 @@
 
 use Supercluster\Gravity\Configuration\BootableContainer;
 
+// Steps down one dir
 chdir(__DIR__ . '/..');
 
+// Requires the Composer autoloader
 require 'vendor/autoload.php';
 
 try {
 
+	// Create HTTP-like environment
 	array_shift($argv);
 	$_SERVER['HTTP_ACCEPT']    = 'text/plain';
 	$_SERVER['REQUEST_METHOD'] = 'EXEC';
 	$_SERVER['REQUEST_URI']    = '/' . implode('/', $argv);
 
+    // Try to run the contained application
     print (new BootableContainer('supercluster.package.ini', 'cliApplication'))->run();
 } catch (Exception $e) {
+
+    // Wraps uncaught exceptions to a generic error
     echo "Unexpected Error.";
     throw $e;
 }

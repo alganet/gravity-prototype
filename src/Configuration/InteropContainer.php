@@ -9,6 +9,11 @@ use Interop\Container\Exception\ContainerException;
 use Interop\Container\Exception\NotFoundException;
 use Interop\Container\ContainerInterface;
 
+/**
+ * An interoperable dependency injection container. It keeps lazy declarations
+ * even when serialized and implements a standard to interface with other
+ * containers.
+ */
 class InteropContainer
 extends ConfigContainer
 implements ContainerInterface, Serializable
@@ -37,6 +42,13 @@ implements ContainerInterface, Serializable
         return (bool) $this->offsetExists($id);
     }
 
+    /**
+     * Creates a lazy reference to an array possibly containing instances.
+     *
+     * @param mixed $value A reference inside method parseStandardItem.
+     *
+     * @see parseStandardItem Method which injects the &$value reference.
+     */
     protected function parseArrayItems(&$value)
     {
         $newValue = new LazyInstantiator();
@@ -47,6 +59,13 @@ implements ContainerInterface, Serializable
         return $value;
     }
 
+    /**
+     * Overrides parent method. Allows detecting and making arrays lazy
+     * by calling parseArrayItems when necessary.
+     *
+     * @param string $key  Key used to store this item on the container.
+     * @param mixed $value A reference inside method parseStandardItem.
+     */
     protected function parseStandardItem($key, &$value)
     {
         if (is_array($value)) {
@@ -59,6 +78,13 @@ implements ContainerInterface, Serializable
     }
 
 
+    /**
+     * Overrides parent method. Allows using LazyInstantiators instead
+     * of default ones.
+     *
+     * @param string $key  Key used to store this item on the container.
+     * @param mixed $value The instantiator params.
+     */
     protected function parseInstantiator($key, $value)
     {
         $key = $this->removeDuplicatedSpaces($key);

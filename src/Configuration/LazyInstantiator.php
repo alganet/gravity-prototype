@@ -6,6 +6,10 @@ use Serializable;
 use ReflectionClass;
 use Respect\Config\Instantiator as ConfigInstantiator;
 
+/**
+ * A serializable instantiator for lazy arrays and instances with
+ * loose parameter bounding.
+ */
 class LazyInstantiator extends ConfigInstantiator implements Serializable
 {
     public function __construct($className = '')

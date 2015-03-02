@@ -3,7 +3,7 @@
 namespace Supercluster\Gravity\MediaTypes;
 
 /**
- *
+ * Represents data as JSON
  */
 class ApplicationJson
 {

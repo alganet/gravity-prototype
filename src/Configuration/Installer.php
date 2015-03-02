@@ -6,14 +6,22 @@ use Composer\Script\Event;
 
 /**
  * Search for configuration files in vendor packages
+ *
+ * @see composer.json File which declares hooks to this class
  */
 class Installer
 {
     protected $file = "supercluster.ini";
     protected $lock = "supercluster.package.ini";
-    protected $defaultKeys = ['boot' , 'load', 'pre'];
+    protected $defaultKeys = ['boot' , 'load', 'pre', 'clustered'];
     protected $keys;
 
+    /**
+     * Fires when composer installs or upgrades
+     *
+     * @param Composer\Script\Event $event The composer event injected by
+     *                                     composer itself.
+     */
     public static function packageChange(Event $event)
     {
         $vendors = $event->getComposer()->getConfig()->get('vendor-dir');
@@ -21,11 +29,14 @@ class Installer
         return $installer->discoverPackages($vendors);
     }
 
+    /**
+     * Looks for the top-level keys on the configuration file
+     */
     protected function setupKeys()
     {
         // Add exports to the default keys
         $this->defaultKeys = array_merge(
-            $this->keys['exports'],
+            $this->keys['clustered'],
             $this->defaultKeys
         );
 
@@ -38,6 +49,11 @@ class Installer
 
     }
 
+    /**
+     * Collects exported keys by multiple vendors
+     *
+     * @param string $vendors Directory with Composer vendorss
+     */
     protected function collectExports($vendorsDir)
     {
         $bootFiles  = glob("{$vendorsDir}/*/*/{$this->file}");
@@ -64,6 +80,11 @@ class Installer
         }
     }
 
+    /**
+     * Discovers packages on vendors dir and collect their exports.
+     *
+     * @param string $vendors Directory with Composer vendorss
+     */
     public function discoverPackages($vendorsDir)
     {
         $this->keys = parse_ini_file("./{$this->file}", true);
@@ -82,6 +103,9 @@ class Installer
         $this->write();
     }
 
+    /**
+     * Writes the vendor-aware configuration
+     */
     public function write()
     {
         // Lock file header

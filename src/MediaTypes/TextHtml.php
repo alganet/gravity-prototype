@@ -4,6 +4,9 @@ namespace Supercluster\Gravity\MediaTypes;
 
 use Twig_Environment;
 
+/**
+ * Represents data as HTML
+ */
 class TextHtml
 {
     public function __construct(Twig_Environment $twig)

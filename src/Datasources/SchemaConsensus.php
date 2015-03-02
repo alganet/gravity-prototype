@@ -11,12 +11,12 @@ class SchemaConsensus extends SchemaContribution implements Routable, Serializab
 
     public function serialize()
     {
-        $this->database = null;
+        return serialize([$this->schemas, $this->database]);
     }
 
     public function unserialize($serialized)
     {
-
+        list($this->schemas, $this->database) = unserialize($serialized);
     }
 
     /** @var array The schema consensus list **/
