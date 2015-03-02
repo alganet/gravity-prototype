@@ -2,15 +2,15 @@
 
 namespace Supercluster\Gravity;
 
+use Serializable;
 use Respect\Rest\Routes\Factory;
-use Respect\Config\Instantiator;
 
 /**
  * A route that uses a container instantiator to lazy load its dependencies
  */
-class Route extends Factory
+class Route extends Factory implements Serializable
 {
-    public function __construct($method, $pattern, Instantiator $factory)
+    public function __construct($method, $pattern, LazyInstantiator $factory)
     {
         parent::__construct(
             $method,
@@ -18,5 +18,26 @@ class Route extends Factory
             $factory->getClassName(),
             $factory
         );
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            $this->method,
+            $this->pattern,
+            $this->class,
+            $this->factory
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->method,
+            $this->pattern,
+            $this->class,
+            $this->factory
+        ) = unserialize($serialized);
+        parent::__construct($this->method, $this->pattern, $this->class, $this->factory);
     }
 }

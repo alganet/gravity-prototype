@@ -2,11 +2,23 @@
 
 namespace Supercluster\Gravity\Datasources;
 
+use Serializable;
 use Respect\Relational\Db;
 use Respect\Rest\Routable;
 
-class SchemaConsensus extends SchemaContribution implements Routable
+class SchemaConsensus extends SchemaContribution implements Routable, Serializable
 {
+
+    public function serialize()
+    {
+        $this->database = null;
+    }
+
+    public function unserialize($serialized)
+    {
+
+    }
+
     /** @var array The schema consensus list **/
     protected $schemas = [];
 

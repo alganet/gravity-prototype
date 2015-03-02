@@ -20,6 +20,19 @@ class BootableContainer extends InteropContainer
         $this->loadEnvironment($bootFile);
     }
 
+    public function serialize()
+    {
+        $copy = $this->getArrayCopy();
+        return serialize([$this->frontName, $copy]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list($this->frontName, $copy) = unserialize($serialized);
+        $this->exchangeArray($copy);
+    }
+
+
     /**
      * Boots the chosen key
      *

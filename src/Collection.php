@@ -2,6 +2,7 @@
 
 namespace Supercluster\Gravity;
 
+use Serializable;
 use Respect\Data\Collections\Collection as DataCollection;
 
 class Collection extends DataCollection

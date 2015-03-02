@@ -47,11 +47,28 @@ class LazyInstantiator extends ConfigInstantiator implements Serializable
 
     public function serialize()
     {
-
+        return serialize([
+            $this->className,
+            $this->params,
+            $this->propertySetters
+        ]);
     }
 
     public function unserialize($serialized)
     {
+        list(
+            $this->className,
+            $this->params,
+            $this->propertySetters
+        ) = unserialize($serialized);
 
+        $this->__construct($this->className);
+
+        foreach ($this->params as $key => $param) {
+            if ($param instanceof ConfigInstantiator) {
+                $param = $param->getInstance();
+            }
+            $this->setParam($key, $param);
+        }
     }
 }

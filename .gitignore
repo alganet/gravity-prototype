@@ -1,2 +1,4 @@
 composer.lock
+db.sqlite
 vendor
+supercluster.package.serial

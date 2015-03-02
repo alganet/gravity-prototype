@@ -15,7 +15,8 @@ implements ContainerInterface, Serializable
 {
     public function serialize()
     {
-        return serialize($this->getArrayCopy());
+        $copy = $this->getArrayCopy();
+        return serialize($copy);
     }
 
     public function unserialize($serialized)
