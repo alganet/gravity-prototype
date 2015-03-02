@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Supercluster\Gravity\BootableContainer;
+use Supercluster\Gravity\Configuration\BootableContainer;
 
 chdir(__DIR__ . '/..');
 
@@ -14,7 +14,7 @@ try {
 	$_SERVER['REQUEST_METHOD'] = 'EXEC';
 	$_SERVER['REQUEST_URI']    = '/' . implode('/', $argv);
 
-    (new BootableContainer('supercluster.package.ini', 'cliApplication'))->run();
+    print (new BootableContainer('supercluster.package.ini', 'cliApplication'))->run();
 } catch (Exception $e) {
     echo "Unexpected Error.";
     throw $e;
